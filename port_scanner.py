@@ -1,20 +1,20 @@
-import socket  # This brings in Python's networking tools
+import socket  # Import Python's built-in networking module
 
-# Step 1: Ask the user for the target (IP address or domain)
+# Prompt the user to enter a target IP address or domain name
 target = input("Enter the target (example: scanme.nmap.org): ")
 
-# Step 2: Choose which ports to scan (these are common ports)
+# Define a list of common ports to scan
 ports = [20, 21, 22, 23, 25, 53, 80, 110, 443]
 
 print(f"\nScanning {target}...\n")
 
-# Step 3: Loop through each port and check if it's open
+# Loop through each port and attempt to connect
 for port in ports:
-    # Create a socket object (like opening a network door)
+    # Create a socket object for TCP connections
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(1)  # Don't wait forever—1 second timeout
+    s.settimeout(1)   # Set timeout to 1 second to avoid delays
 
-    # Try to connect to the target on this port
+    # Attempt to connect to the target on the current port
     result = s.connect_ex((target, port))
 
     if result == 0:
@@ -22,6 +22,7 @@ for port in ports:
     else:
         print(f"Port {port} is CLOSED")
 
-    s.close()  # Close the connection
+    # Close the socket connection
+    s.close()
 
 print("\nScan complete")
